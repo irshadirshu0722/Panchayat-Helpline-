@@ -14,15 +14,17 @@ from pathlib import Path
 import os
 import cloudinary
 
+from dotenv import load_dotenv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-szd0xl1e9afyr1zvdo8624ixpm=@$s(b1(1k_=aqbv(00oq&)s'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -139,15 +141,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # TWILIO SETTING
-# TWILIO_PHONE_NUMBER = os.getenv('TWILIO_PHONE_NUMBER')
-# TWILIO_ACCOUNT_SID  =os.getenv('TWILIO_ACCOUNT_SID')
-# TWILIO_AUTH_TOKEN  =os.getenv('TWILIO_AUTH_TOKEN')
-TWILIO_PHONE_NUMBER = '+13852472322'
-TWILIO_ACCOUNT_SID  ="AC891c53a5487aeee8241a4b1a8b19a4ef"
-TWILIO_AUTH_TOKEN  ="95df08c562eb17f75a6831c03e2caff0"
+TWILIO_PHONE_NUMBER = os.environ.get('TWILIO_PHONE_NUMBER')
+TWILIO_ACCOUNT_SID  =os.environ.get('TWILIO_ACCOUNT_SID')
+TWILIO_AUTH_TOKEN  =os.environ.get('TWILIO_AUTH_TOKEN')
+
+
 # Cloudinary Settings
+CLOUDINARY_API_KEY = os.environ.get('CLOUDINARY_API_KEY')
+CLOUDINARY_API_SECRET = os.environ.get('CLOUDINARY_API_SECRET')
+CLOUDINARY_CLOUD_NAME = os.environ.get('CLOUDINARY_CLOUD_NAME')
 cloudinary.config(
-  api_key = "665231837623345",
-  api_secret = "dKnNuIpP3yWN7XX4Ub_mDYr0vAM",
-  cloud_name = "deat6szvz",
+api_key = CLOUDINARY_API_KEY,
+api_secret = CLOUDINARY_API_SECRET,
+cloud_name = CLOUDINARY_CLOUD_NAME,
 )

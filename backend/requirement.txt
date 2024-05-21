@@ -3,3 +3,4 @@ twilio
 djangorestframework
 cloudinary
 djangorestframework-jsonapi
+python-dotenv
