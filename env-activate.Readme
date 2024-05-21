@@ -1,0 +1,44 @@
+python3 -m venv env
+
+Set-ExecutionPolicy RemoteSigned -Scope Process
+
+env/Scripts/activate
+
+cd backend
+
+celery -A backend worker -l info -P gevent
+
+
+Set-ExecutionPolicy RemoteSigned -Scope Process
+
+env/Scripts/activate
+
+cd backend
+
+python manage.py runserver
+
+
+===============================================
+Set-ExecutionPolicy RemoteSigned -Scope Process
+
+env/Scripts/activate
+
+cd celery_with_django
+
+celery -A django_celery beat -l info
+
+
+    python manage.py makemigrations
+    python manage.py migrate
+    python manage.py runserver
+
+
+del db.sqlite3 
+
+cp db.sqlite3 db_backup.sqlite3
+cp db_backup.sqlite3 db.sqlite3
+
+
+@admin.register(Tag)
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ('name',)
