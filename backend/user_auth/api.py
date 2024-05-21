@@ -21,15 +21,17 @@ class LoginApiView(APIView):
         send_otp(phone_number,otp_code)
         return Response({'token':otp_instance.token},status=status.HTTP_200_OK)
     except Exception as e:
+      print(str(e))
       return Response({'error':str(e)},status=status.HTTP_400_BAD_REQUEST)
 class LoginVerifyApiView(APIView):
   def post(self,request):
     serializer = LoginVerifySerializer(data=request.data)
     try:
       if serializer.is_valid(raise_exception=True):
-        serializer.save()
-        return Response(status=status.HTTP_200_OK)
+        user = serializer.save()
+        return Response({'auth_token':user.auth_token.key},status=status.HTTP_200_OK)
     except Exception as e:
+      print(str(e))
       return Response({'error':str(e)},status=status.HTTP_400_BAD_REQUEST)
 
 

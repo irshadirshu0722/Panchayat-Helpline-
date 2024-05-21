@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+import cloudinary
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -40,8 +42,11 @@ INSTALLED_APPS = [
     'user_auth',
     'rest_framework',
     'admins',
+    'service',
+    'rest_framework.authtoken',
 
 ]
+AUTH_USER_MODEL = 'auth.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -52,9 +57,17 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
+REST_FRAMEWORK = {
+    'EXCEPTION_HANDLER': 'rest_framework_json_api.exceptions.exception_handler',
+    
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    
+}
 ROOT_URLCONF = 'backend.urls'
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -72,8 +85,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'backend.wsgi.application'
-
-
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
@@ -84,7 +95,7 @@ DATABASES = {
     }
 }
 
-AUTH_USER_MODEL = 'admins.MyUser'
+# AUTH_USER_MODEL = 'admins.MyUser'
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -128,7 +139,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # TWILIO SETTING
-TWILIO_PHONE_NUMBER = os.getenv('TWILIO_PHONE_NUMBER')
-TWILIO_ACCOUNT_SID  =os.getenv('TWILIO_ACCOUNT_SID')
-TWILIO_AUTH_TOKEN  =os.getenv('TWILIO_AUTH_TOKEN')
-
+# TWILIO_PHONE_NUMBER = os.getenv('TWILIO_PHONE_NUMBER')
+# TWILIO_ACCOUNT_SID  =os.getenv('TWILIO_ACCOUNT_SID')
+# TWILIO_AUTH_TOKEN  =os.getenv('TWILIO_AUTH_TOKEN')
+TWILIO_PHONE_NUMBER = '+13852472322'
+TWILIO_ACCOUNT_SID  ="AC891c53a5487aeee8241a4b1a8b19a4ef"
+TWILIO_AUTH_TOKEN  ="95df08c562eb17f75a6831c03e2caff0"
+# Cloudinary Settings
+cloudinary.config(
+  api_key = "665231837623345",
+  api_secret = "dKnNuIpP3yWN7XX4Ub_mDYr0vAM",
+  cloud_name = "deat6szvz",
+)

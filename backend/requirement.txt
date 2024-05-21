@@ -1,0 +1,5 @@
+django
+twilio
+djangorestframework
+cloudinary
+djangorestframework-jsonapi

@@ -3,14 +3,15 @@ from django.contrib.auth import get_user_model
 from admins.models import OTP
 from .exceptions import *
 from django.utils import timezone
+from rest_framework.authtoken.models import Token
+
 User = get_user_model()
 class LoginSerializer(serializers.Serializer):
     phone_number = serializers.CharField()
 class LoginVerifySerializer(serializers.Serializer):
     token = serializers.UUIDField()
-    otp = serializers.CharField()
+    otp =  serializers.CharField()
     phone_number = serializers.CharField()
-
     def validate(self, attrs):
         token = attrs.get('token')
         otp  = attrs.get('otp')
@@ -25,8 +26,8 @@ class LoginVerifySerializer(serializers.Serializer):
         return super().validate(attrs)
     def create(self, validated_data):
       data = self.validated_data
-      phone_number =data['phone_number']
-      user,created = User.objects.get_or_create(phone_number=phone_number)
-      user.last_login  = timezone.now()
+      phone_number = data['phone_number']
+      user,created = User.objects.get_or_create(username=phone_number)
+      user.last_login = timezone.now()
       user.save()
       return user
