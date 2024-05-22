@@ -12,6 +12,7 @@ def upload_to(instance):
 
 class Complaint(models.Model):
   PROBLEM_RATE_CHOICES = [(str(i), str(i)) for i in range(1, 11)]
+  STATUS_CHOICES = [('pending','Pending'),('rejected','Rejected'),('approved','Approved')]
   ward = models.IntegerField()
   name = models.CharField(max_length=100)
   user = models.ForeignKey(User,on_delete=models.SET_NULL,related_name='complaints',null=True)
@@ -20,6 +21,18 @@ class Complaint(models.Model):
   landmark = models.CharField(max_length=500)
   problem_rate = models.CharField(max_length=10,choices=PROBLEM_RATE_CHOICES)
   audio = CloudinaryField(resource_type='auto',folder='complaints/audio',null=True,blank=True)
+  status = models.CharField(max_length=20,choices=STATUS_CHOICES,default='pending')
+  _update_at = models.DateTimeField(null=True)
+  _complaint_at = models.DateTimeField(auto_now_add=True,null=True)
+  @property
+  def update_at(self):
+    if(self._update_at):
+      return self._update_at.strftime("%d %b %Y") 
+    else:
+      return "---"
+  @property
+  def complaint_at(self):
+    return self._complaint_at.strftime("%d %b %Y") 
   @property
   def audio_url(self):
       return self.audio.url

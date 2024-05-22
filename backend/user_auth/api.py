@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import LoginSerializer,LoginVerifySerializer
 from django.contrib.auth import get_user_model
-from admins.models import OTP
+from .models import OTP
 from .utils import send_otp,generate_otp
 from django.utils import timezone
 User = get_user_model()

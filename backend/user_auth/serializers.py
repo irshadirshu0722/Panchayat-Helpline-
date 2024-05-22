@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from admins.models import OTP
+from .models import OTP
 from .exceptions import *
 from django.utils import timezone
 from rest_framework.authtoken.models import Token
